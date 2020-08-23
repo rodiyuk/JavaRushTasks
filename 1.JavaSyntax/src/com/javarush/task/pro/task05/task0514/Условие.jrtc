@@ -1,0 +1,13 @@
+taskKey="com.javarush.task.pro.task05.task0514"\n\nВыводим двухмерный массив
+
+Реализуй методы printStringMultiArray(String[][]) и printIntMultiArray(int[][]), которые выводят переданный массив
+в консоль с помощью метода Arrays.deepToString(Object[][]).
+
+
+Требования:
+1.	В классе Solution должен быть публичный статический метод printStringMultiArray((String[][]) и printIntMultiArray(int[][]) с типом возвращаемого значение void.
+2.	В классе Solution должен быть публичный статический метод printIntMultiArray(int[][]) с типом возвращаемого значение void.
+3.	В методе printStringMultiArray(String[][]) выведи в консоль переданный массив с помощью метода Arrays.deepToString(Object[][]).
+4.	В методе printIntMultiArray(int[][]) выведи в консоль переданный массив с помощью метода Arrays.deepToString(int[][]).
+
+
