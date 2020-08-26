@@ -1,21 +1,11 @@
-package com.javarush.task.pro.task13.task1313;
-
-import java.util.LinkedList;
+package com.javarush.task.pro.task13.task1314;
 
 public class StringsLinkedList {
     private Node first = new Node();
     private Node last = new Node();
-
-    public void printAll() {
-        Node currentElement = first.next;
-        while ((currentElement) != null) {
-            System.out.println(currentElement.value);
-            currentElement = currentElement.next;
-        }
-    }
+    public int size;
 
     public void add(String value) {
-        //напишите тут ваш код
         if (first.next == null) {
             Node node = new Node();
             node.value = value;
@@ -23,6 +13,7 @@ public class StringsLinkedList {
         }
         if (last.prev == null) {
             last.prev = first.next;
+            size++;
             return;
         }
 
@@ -33,6 +24,18 @@ public class StringsLinkedList {
         lastNode.next = node;
         node.prev = lastNode;
         last.prev = node;
+        size++;
+    }
+
+    public String get(int index) {
+        //напишите тут ваш код
+        if (index < 0 || index > size) return null;
+        if (index == 0) return first.next.value;
+        Node node = first.next;
+        for (int i = 1; i <= index; i++) {
+            node = node.next;
+        }
+        return node.value;
     }
 
     public static class Node {
