@@ -12,29 +12,12 @@ public class Solution {
         String en;
         if (ru.toLowerCase().equals("понедельник")) en = "Monday";
         else if (ru.toLowerCase().equals("вторник")) en = "Tuesday";
-
-            case "вторник":
-                en = "Tuesday";
-                break;
-            case "среда":
-                en = "Wednesday";
-                break;
-            case "четверг":
-                en = "Thursday";
-                break;
-            case "пятница":
-                en = "Friday";
-                break;
-            case "суббота":
-                en = "Saturday";
-                break;
-            case "воскресенье":
-                en = "Sunday";
-                break;
-            default:
-                en = "Недействительный день недели";
-        }
+        else if (ru.toLowerCase().equals("среда")) en = "Wednesday";
+        else if (ru.toLowerCase().equals("четверг")) en = "Thursday";
+        else if (ru.toLowerCase().equals("пятница")) en = "Friday";
+        else if (ru.toLowerCase().equals("суббота")) en = "Saturday";
+        else if (ru.toLowerCase().equals("воскресенье")) en = "Sunday";
+        else en = "Недействительный день недели";
         return en;
-
     }
 }

@@ -39,7 +39,7 @@ public class Solution {
     public static void removeBugWithFor(ArrayList<String> list) {
         //напишите тут ваш код
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("bug")){
+            if (list.get(i).equalsIgnoreCase("bug")){
                 list.remove(i);
                 i--;
             }
@@ -50,7 +50,7 @@ public class Solution {
         //напишите тут ваш код
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()){
-            if (iterator.next().equals("bug")) iterator.remove();
+            if (iterator.next().equalsIgnoreCase("bug")) iterator.remove();
         }
     }
 
@@ -58,7 +58,7 @@ public class Solution {
         //напишите тут ваш код
         ArrayList<String> copyList = new ArrayList<>(list);
         for (String s : copyList) {
-            if (s.equals("bug")) list.remove(s);
+            if (s.equalsIgnoreCase("bug")) list.remove(s);
         }
     }
 }
