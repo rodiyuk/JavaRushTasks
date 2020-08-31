@@ -17,21 +17,14 @@ public class Solution {
         Path path1 = Path.of(sc.nextLine());
         Path path2 = Path.of(sc.nextLine());
         if (Files.notExists(path2)) Files.createDirectory(path2);
-        try (DirectoryStream<Path> files = Files.newDirectoryStream(path1)) {
-            for (Path path : files) {
-                Files.copy(path, path2.resolve(path.getFileName()));
-                if (Files.isDirectory(path)) {
-                    copyDirectiry(path, path2.resolve(path.getFileName()));
-                }
-            }
-        }
+        copyDirectory(path1, path2);
     }
-    public static void copyDirectiry(Path source, Path dest) throws IOException {
+    public static void copyDirectory(Path source, Path dest) throws IOException {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(source)) {
             for (Path path : files) {
                 Files.copy(path, dest.resolve(path.getFileName()));
                 if (Files.isDirectory(path)) {
-                    copyDirectiry(source, dest.resolve(path.getFileName()));
+                    copyDirectory(path, dest.resolve(path.getFileName()));
                 }
             }
         }
