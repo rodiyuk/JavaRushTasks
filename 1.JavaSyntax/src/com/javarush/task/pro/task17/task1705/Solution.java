@@ -1,9 +1,9 @@
-package com.javarush.task.pro.task17.task1704;
+package com.javarush.task.pro.task17.task1705;
 
 import java.util.ArrayList;
 
 /* 
-Космическая одиссея ч.2
+Космическая одиссея ч.3
 */
 public class Solution {
     public static ArrayList<Astronaut> spaceship = new ArrayList<>();
@@ -16,21 +16,22 @@ public class Solution {
 
     public static void runWorkingProcess() {
         //напишите тут ваш код
-        pilot((Human)spaceship.get(0));
-        pilot((Human)spaceship.get(1));
-        createDirection((Dog) spaceship.get(2));
-        research((Cat) spaceship.get(3));
+        for (var astronaut : spaceship){
+            if (astronaut instanceof Human) pilot((Human)astronaut);
+            if (astronaut instanceof Dog) createDirection((Dog) astronaut);
+            if (astronaut instanceof Cat) research((Cat) astronaut);
+        }
     }
 
-    public static void pilot(Human human){
+    public static void pilot(Human human) {
         System.out.println("Член экипажа " + human.getInfo() + " пилотирует корабль.");
     }
 
-    public static void createDirection(Dog dog){
+    public static void createDirection(Dog dog) {
         System.out.println("Член экипажа " + dog.getInfo() + " занимается созданием навигационного маршрута.");
     }
 
-    public static void research(Cat cat){
+    public static void research(Cat cat) {
         System.out.println("Член экипажа " + cat.getInfo() + " исследует ближайшие планеты.");
     }
 
