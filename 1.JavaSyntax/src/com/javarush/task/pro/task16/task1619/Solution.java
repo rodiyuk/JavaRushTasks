@@ -9,7 +9,7 @@ public class Solution {
 
     public static void main(String[] args) {
         //напишите тут ваш код   19.03.2020г. 5ч.4мин
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyyг. HHч.mmмин");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyyг. Hч.mмин");
         System.out.println(dtf.format(localDateTime));
     }
 }
