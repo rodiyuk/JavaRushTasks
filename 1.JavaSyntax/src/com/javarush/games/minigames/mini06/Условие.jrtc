@@ -1,0 +1,16 @@
+taskKey="com.javarush.games.minigames.mini06"\n\nДиалоговые окна
+
+Реализуем отображение диалогового окна с текстом. По нажатию левой кнопки мыши выводим текст "Вы выиграли" зеленым цветом,
+а по нажатию правой кнопки мыши - "Вы проиграли" красным цветом. Для того, что бы работать с нажатиями кнопок мыши нужно
+переопределить методы onMouseLeftClick(int, int) и onMouseRightClick(int, int). А для выводи диалогового окна используй метод
+showMessageDialog(Color, String, Color, int) класса Game.
+
+
+Требования:
+1.	В классе MessageGame должен быть переопределен метод onMouseLeftClick(int, int) родительского класса Game.
+2.	В классе MessageGame должен быть переопределен метод onMouseRightClick(int, int) родительского класса Game.
+3.	В методе onMouseLeftClick(int, int) должно отображаться диалоговое окно согласно условию.
+4.	В методе onMouseRightClick(int, int) должно отображаться диалоговое окно согласно условию.
+5.	В методе showMessageDialog(Color, String, Color, int) класса Game не должен быть переопреден в классе MessageGame.
+
+
