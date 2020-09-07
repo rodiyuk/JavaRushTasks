@@ -1,0 +1,18 @@
+taskKey="com.javarush.task.pro.task18.task1817"\n\nАнализ потока чисел
+
+Программа анализирует поток чисел. Логика программы следующая :
+- метод hasNegativeEvenNumbers(Stream<Integer>) возвращает true, если во входящем потоке есть отрицательные четные числа и false,
+если таких чисел нет. Для поиска чисел в потоке используй метод anyMatch() объекта типа (Stream<Integer>);
+- метод hasOnlyPositiveNumbers(Stream<Integer>) возвращает true, если во входящем потоке есть только положительные числа и false,
+если таких чисел нет. Для поиска чисел в потоке используй метод allMatch() объекта типа (Stream<Integer>);
+- метод hasOnlyNegativeNumbers(Stream<Integer>) возвращает true, если во входящем потоке есть только отрицательные числа и false,
+если таких чисел нет. Для поиска чисел в потоке используй метод noneMatch() объекта типа (Stream<Integer>);
+Метод main() не принимает участие в тестировании.
+
+
+Требования:
+1.	Публичный статический метод hasNegativeEvenNumbers(Stream&lt;Integer&gt;) нужно реализовать согласно условию.
+2.	Публичный статический метод hasOnlyPositiveNumbers(Stream&lt;Integer&gt;) нужно реализовать согласно условию.
+3.	Публичный статический метод hasOnlyNegativeNumbers(Stream&lt;Integer&gt;) нужно реализовать согласно условию.
+
+

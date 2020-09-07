@@ -1,0 +1,12 @@
+taskKey="com.javarush.task.pro.task18.task1814"\n\nУникальные слова
+
+Реализуй метод getDistinct(ArrayList<String>), чтобы он возвращал поток уникальных слов из списка, который получает в качестве входного
+параметра. В этом тебе поможет метод distinct() объекта типа Stream<String>.
+Метод main() не принимает участие в тестировании.
+
+
+Требования:
+1.	В публичном статическом методе getDistinct(ArrayList&lt;String&gt;) нужно вызывать метод distinct() объекта типа Stream&lt;String&gt;.
+2.	Нужно, чтобы метод getDistinct(ArrayList&lt;String&gt;) возвращал поток уникальных слов.
+
+

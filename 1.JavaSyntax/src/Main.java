@@ -6,27 +6,15 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Set<String> allZones = ZoneId.getAvailableZoneIds();
-        LocalDateTime dt = LocalDateTime.now();
+        // пустой список
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        ArrayList<String> strings = new ArrayList<>();
+        Optional<Integer> min = numbers.stream().min(Integer::compare);
+        System.out.println(min.orElse(-1)); // -1
 
-// Создаём список с зонами и сортируем его.
-        List<String> zoneList = new ArrayList<String>(allZones);
-        Collections.sort(zoneList);
-
-        for (String s : zoneList) {
-            ZoneId zone = ZoneId.of(s);
-            ZonedDateTime zdt = dt.atZone(zone);
-            ZoneOffset offset = zdt.getOffset();
-            int secondsOfHour = offset.getTotalSeconds() / (60 * 60);
-            String out = String.format("%35s %10s%n", zone, offset);
-
-            // Пишем только часовые пояса, которые используют смещение
-            // в неполных часах.
-            if (secondsOfHour != 0) {
-                System.out.print(secondsOfHour);
-                System.out.printf(out);
-            }
-
-        }
+// непустой список
+        Collections.addAll(strings, "4","5","6","7","8","9");
+        min = numbers.stream().min(Integer::compare);
+        System.out.println(min.orElse(-1)); // 4
     }
 }
