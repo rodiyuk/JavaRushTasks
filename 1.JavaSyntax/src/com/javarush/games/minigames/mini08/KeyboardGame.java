@@ -20,58 +20,44 @@ public class KeyboardGame extends Game {
 
     @Override
     public void onKeyPress(Key key) {
-        switch (key) {
-            case LEFT : {
-                for (int y = 0; y < 3; y++) {
-                    setCellColor(0, y, Color.RED);
-                }
+        if (key == Key.LEFT) {
+            for (int y = 0; y < 3; y++) {
+                setCellColor(0, y, Color.BLACK);
             }
-            break;
-            case RIGHT : {
-                for (int y = 0; y < 3; y++) {
-                    setCellColor(2, y, Color.RED);
-                }
+        } else if (key == Key.RIGHT) {
+            for (int y = 0; y < 3; y++) {
+                setCellColor(2, y, Color.BLACK);
             }
-            break;
-            case UP : {
-                for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 0, Color.RED);
-                }
+        } else if (key == Key.UP) {
+            for (int x = 0; x < 3; x++) {
+                setCellColor(x, 0, Color.BLACK);
             }
-            break;
-            case DOWN : {
-                for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 2, Color.RED);
-                }
+        } else if (key == Key.DOWN) {
+            for (int x = 0; x < 3; x++) {
+                setCellColor(x, 2, Color.BLACK);
             }
         }
     }
+
     @Override
     public void onKeyReleased(Key key) {
-        switch (key) {
-            case LEFT : {
-                for (int y = 0; y < 3; y++) {
-                    setCellColor(0, y, Color.WHITE);
-                }
+        if (key == Key.LEFT) {
+            for (int y = 0; y < 3; y++) {
+                setCellColor(0, y, Color.WHITE);
             }
-            break;
-            case RIGHT : {
-                for (int y = 0; y < 3; y++) {
-                    setCellColor(2, y, Color.WHITE);
-                }
+        } else if (key == Key.RIGHT) {
+            for (int y = 0; y < 3; y++) {
+                setCellColor(2, y, Color.WHITE);
             }
-            break;
-            case UP : {
-                for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 0, Color.WHITE);
-                }
+        } else if (key == Key.UP) {
+            for (int x = 0; x < 3; x++) {
+                setCellColor(x, 0, Color.WHITE);
             }
-            break;
-            case DOWN : {
-                for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 2, Color.WHITE);
-                }
+        } else if (key == Key.DOWN) {
+            for (int x = 0; x < 3; x++) {
+                setCellColor(x, 2, Color.WHITE);
             }
         }
     }
 }
+

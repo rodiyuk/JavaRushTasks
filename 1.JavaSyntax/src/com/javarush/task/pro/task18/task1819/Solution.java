@@ -21,10 +21,11 @@ public class Solution {
 
     public static void printList(List<String> list) {
         //напишите тут ваш код
-        for (String l : list){
-            Optional<String> str = Optional.ofNullable(l);
-            System.out.println(str.orElse("Этот элемент равен null"));
-        }
+            System.out.println(Optional.ofNullable(list.get(0)).orElse("Этот элемент равен null"));
+            System.out.println(Optional.ofNullable(list.get(1)).orElse("Этот элемент равен null"));
+            System.out.println(Optional.ofNullable(list.get(2)).orElse("Этот элемент равен null"));
+            System.out.println(Optional.ofNullable(list.get(3)).orElse("Этот элемент равен null"));
+            System.out.println(Optional.ofNullable(list.get(4)).orElse("Этот элемент равен null"));
       /*  Optional<String> optional = Optional.ofNullable(list.toString());
         System.out.println(optional.orElse("Этот элемент равен null"));*/
     }

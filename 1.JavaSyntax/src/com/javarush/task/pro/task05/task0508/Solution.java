@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
-        String[] stringArray = getStringArray();
-        String[] result = removeSameStrings(stringArray);
+        String[] strings = getStringArray();
+        String[] result = removeSameStrings(strings);
         Arrays.stream(result).forEach(System.out::println);
     }
 
