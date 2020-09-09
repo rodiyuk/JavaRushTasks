@@ -20,15 +20,15 @@ public class CountGame extends Game {
 
     public void showResult() {
         int sum = 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < getScreenWidth(); i++) {
+            for (int j = 0; j < getScreenHeight(); j++) {
                 sum += getCellNumber(j, i);
             }
         }
         printSum(sum);
         int countOfGreenCell = 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < getScreenWidth(); i++) {
+            for (int j = 0; j < getScreenHeight(); j++) {
                 if (getCellColor(j, i) == Color.GREEN) countOfGreenCell++;
             }
         }
