@@ -6,6 +6,9 @@ import java.io.InputStreamReader;/*
 Парсер реквестов
 */
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -14,18 +17,26 @@ public class Solution {
         String URL = reader.readLine();
         String par = URL.substring(URL.indexOf("?") + 1);
         String[] array = par.split("&");
-        ArrayList<String> param = new ArrayList<>();
-        ArrayList<String> value = new ArrayList<>();
+//        Arrays.stream(array).forEach(System.out::println);
+        Map<String, String> param = new HashMap<>();
         for (String arr : array) {
             if (arr.contains("=")) {
-                param.add(arr.split("=")[0]);
-                value.add(arr.split("=")[1]);
-                System.out.print(arr.endsWith("=") + " ");
-            } else System.out.print(arr + " ");
+                param.put(arr.split("=")[0], arr.split("=")[1]);
+                System.out.print(arr.split("=")[0] + " ");
+            } else {
+                param.put(arr, null);
+                System.out.print(arr + " ");
+            }
         }
-        for (String arr : array) {
-            if (arr.contains("obj")) {
-                if (arr.substring(arr.indexOf("="), 1).contains(".")) ar
+        System.out.println();
+        for (Map.Entry<String, String> entry : param.entrySet()) {
+            if (entry.getKey().equals("obj")) {
+                try {
+                    double d = Double.parseDouble(entry.getValue());
+                    alert(d);
+                } catch (NumberFormatException e) {
+                    alert(entry.getValue());
+                }
             }
         }
     }

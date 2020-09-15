@@ -23,25 +23,25 @@ public class KeyboardGame extends Game {
         switch (key) {
             case LEFT : {
                 for (int y = 0; y < 3; y++) {
-                    setCellColor(0, y, Color.RED);
+                    setCellColor(0, y, Color.GREEN);
                 }
             }
             break;
             case RIGHT : {
                 for (int y = 0; y < 3; y++) {
-                    setCellColor(2, y, Color.RED);
+                    setCellColor(2, y, Color.GREEN);
                 }
             }
             break;
             case UP : {
                 for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 0, Color.RED);
+                    setCellColor(x, 0, Color.GREEN);
                 }
             }
             break;
             case DOWN : {
                 for (int x = 0; x < 3; x++) {
-                    setCellColor(x, 2, Color.RED);
+                    setCellColor(x, 2, Color.GREEN);
                 }
             }
         }
