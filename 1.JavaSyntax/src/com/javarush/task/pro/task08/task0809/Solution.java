@@ -1,4 +1,5 @@
 package com.javarush.task.pro.task08.task0809;
+
 /*
 Counter
 */
@@ -12,8 +13,8 @@ public class Solution {
         //напишите тут ваш код
         for (int i = 1; i <= 10; i++) {
             System.out.println(i);
-            if(i==10) break;
-            else Thread.sleep(1,500000);
+            if (i < 10)
+                Thread.sleep(1, 300000);
         }
     }
 }

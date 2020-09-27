@@ -5,7 +5,7 @@ package com.javarush.task.pro.task11.task1115;
 */
 
 public class Solution {
-    private static void main(String[] args) {
+    public static void main(String... errors) {
         System.out.println("It works!");
     }
 }

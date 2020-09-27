@@ -8,7 +8,7 @@ public class Solution {
     public static void main(String[] args) {
         String numberStr = "147852369";
         for (char symbol : numberStr.toCharArray()) {
-            System.out.print(digitToText(symbol));
+            System.out.print(digitToText(symbol) + " ");
         }
         System.out.println();
     }
@@ -47,6 +47,6 @@ public class Solution {
                 result = "девять";
                 break;
         }
-        return result + " ";
+        return result;
     }
 }

@@ -8,9 +8,10 @@ import java.util.List;
 */
 
 public class UniversityGroup {
-    public List<String> students = new ArrayList<>();
+    public List<String> students;
 
     public UniversityGroup() {
+        students = new ArrayList<>();
         students.add("Сергей Фрединский");
         students.add("Виталий Правдивый");
         students.add("Максим Козыменко");

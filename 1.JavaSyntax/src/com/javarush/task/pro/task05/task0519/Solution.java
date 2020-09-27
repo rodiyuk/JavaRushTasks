@@ -7,20 +7,15 @@ import java.util.Arrays;
 */
 public class Solution {
 
+    public static int[] array = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+    public static int element = 5;
+
     public static void main(String[] args) {
-        int[] array = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-
-        System.out.println(contains(array, 5));
-        System.out.println(contains(array, 99));
-        System.out.println(contains(array, 1));
-        System.out.println(contains(array, -15));
-    }
-
-    public static boolean contains(int[] array, int element) {
         //напишите тут ваш код
-        int[] copy = Arrays.copyOf(array,array.length);
+        int[] copy = array.clone();
         Arrays.sort(copy);
-        return Arrays.binarySearch(copy, element) >= 0;
+        int index = Arrays.binarySearch(copy, element);
+        if (index >= 0 && index < copy.length) System.out.println(true);
+        else System.out.println(false);
     }
-
 }

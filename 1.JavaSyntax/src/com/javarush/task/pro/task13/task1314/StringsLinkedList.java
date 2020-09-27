@@ -28,14 +28,16 @@ public class StringsLinkedList {
     }
 
     public String get(int index) {
-        //напишите тут ваш код
-        if (index < 0 || index > size) return null;
-        if (index == 0) return first.next.value;
-        Node node = first.next;
-        for (int i = 1; i <= index; i++) {
-            node = node.next;
+        int currentIndex = 0;
+        Node currentElement = first.next;
+        while ((currentElement) != null) {
+            if(currentIndex == index) {
+                return currentElement.value;
+            }
+            currentElement = currentElement.next;
+            currentIndex++;
         }
-        return node.value;
+        return null;
     }
 
     public static class Node {

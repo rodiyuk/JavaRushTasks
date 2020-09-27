@@ -9,4 +9,8 @@ public class Solution {
         Cat cat = new Cat();
         System.out.println(cat.name);
     }
+
+}
+class Cat {
+    String name = "Tom";
 }
