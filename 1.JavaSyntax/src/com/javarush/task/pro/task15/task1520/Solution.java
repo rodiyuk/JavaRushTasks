@@ -1,7 +1,6 @@
 package com.javarush.task.pro.task15.task1520;
 
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -12,22 +11,17 @@ import java.util.Scanner;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-        //напишите тут ваш код
-        Scanner sc = new Scanner(System.in);
-        Path path1 = Path.of(sc.nextLine());
-        Path path2 = Path.of(sc.nextLine());
-        if (Files.notExists(path2)) Files.createDirectory(path2);
-        copyDirectory(path1, path2);
-    }
-    public static void copyDirectory(Path source, Path dest) throws IOException {
-        try (DirectoryStream<Path> files = Files.newDirectoryStream(source)) {
-            for (Path path : files) {
-                Files.copy(path, dest.resolve(path.getFileName()));
-                if (Files.isDirectory(path)) {
-                    copyDirectory(path, dest.resolve(path.getFileName()));
-                }
+        Scanner scanner = new Scanner(System.in);
+        Path sourceDirectory = Path.of(scanner.nextLine());
+        Path targetDirectory = Path.of(scanner.nextLine());
+
+        Files.walk(sourceDirectory).forEach(path -> {
+            try {
+                Files.copy(path, targetDirectory.resolve(sourceDirectory.relativize(path)));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
+        });
     }
 }
 

@@ -7,7 +7,7 @@ public class Solution {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try (FileInputStream file = new FileInputStream(reader.readLine())) {
-                if(file.available()<1000){
+                if (file.available() < 1000) {
                     throw new DownloadException();
                 }
             } catch (IOException e) {

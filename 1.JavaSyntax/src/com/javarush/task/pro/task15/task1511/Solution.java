@@ -1,9 +1,8 @@
 package com.javarush.task.pro.task15.task1511;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 /* 
@@ -14,7 +13,7 @@ public class Solution {
     public static void main(String[] args) {
         try (InputStream stream = System.in;
              Scanner scanner = new Scanner(stream);
-             FileWriter output = new FileWriter(scanner.nextLine())) {
+             BufferedWriter output = Files.newBufferedWriter(Path.of(scanner.nextLine()))) {
             char[] chars = new char[]{'j', 'a', 'v', 'a'};
                 output.write(chars);
         } catch (IOException e) {
