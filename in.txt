@@ -1,3 +1,1 @@
-This is a static test string
-3
-4
+Today is 05 октября 2020, понедельник, and the current temperature is 5 C
