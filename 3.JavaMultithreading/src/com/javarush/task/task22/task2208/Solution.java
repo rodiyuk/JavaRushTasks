@@ -9,20 +9,21 @@ import java.util.Map;
 public class Solution {
     public static void main(String[] args) {
         Map<String, String> map = new HashMap<>();
-        map.put("name","Ivanov");
-        map.put("country","Ukraine");
-        map.put("city","Kiev");
-        map.put("age",null);
+        map.put("name", "Ivanov");
+        map.put("country", "Ukraine");
+        map.put("city", "Kiev");
+        map.put("age", null);
         System.out.println(getQuery(map));
     }
 
     public static String getQuery(Map<String, String> params) {
-        StringBuilder builder=new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            if (entry.getValue() != null){
-                builder.append(entry.getKey()).append(" = '").append(entry.getValue());
+            if (entry.getValue() != null) {
+                builder.append(entry.getKey()).append(" = '").append(entry.getValue()).append("' and ");
             }
         }
+        if (builder.toString().endsWith(" and ")) return builder.substring(0, builder.length() - 5);
         return builder.toString();
     }
 }
