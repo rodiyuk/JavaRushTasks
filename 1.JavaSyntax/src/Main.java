@@ -2,17 +2,23 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
-        char[] number = "+38(050)123-45-67".toCharArray();
-        System.out.println(Arrays.toString(number));
-        String phone = "";
-        for (char c : number) {
-            if (Character.isDigit(c)) {
-                System.out.println(c);
-                phone+=c;
+    public static void print() {
+        //Создаем массив, куда будем "рисовать" текущее состояние игры
+        int[][] ints = new int[5][5];
+        //Рисуем все кусочки змеи
+        for (int i = 0; i < ints.length; i++) {
+            for (int j = 0; j < ints[i].length; j++) {
+                if (i == 0 || i == ints.length - 1)
+                    System.out.print(".");
             }
+            System.out.println();
         }
-        System.out.println("callto://+" + phone);
+        //Рисуем мышь
+        //Выводим все это на экран
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        print();
     }
 }
