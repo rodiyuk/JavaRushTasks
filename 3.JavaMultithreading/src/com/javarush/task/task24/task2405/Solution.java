@@ -1,6 +1,7 @@
 package com.javarush.task.task24.task2405;
 
-/* 
+
+/*
 Black box
 */
 public class Solution implements Action {
@@ -10,9 +11,33 @@ public class Solution implements Action {
 
     private Action solutionAction = new Action() {
         //напишите тут ваш код
+        private FirstClass firstClass;
+        private SecondClass secondClass;
 
         public void someAction() {
             //напишите тут ваш код
+            if (param > 0) {
+                if (firstClass == null) {
+                    firstClass = new FirstClass() {
+                        @Override
+                        public void someAction() {
+                            super.someAction();
+                            Solution.this.someAction();
+                        }
+
+                        @Override
+                        public Action getDependantAction() {
+                            System.out.println(param--);
+                            return param > 0 ? Solution.this : this;
+                        }
+                    };
+                }
+                firstClass.getDependantAction().someAction();
+            } else {
+                secondClass = new SecondClass();
+                secondClass.sb.append(SecondClass.SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM + param);
+                secondClass.someAction();
+            }
         }
     };
 
