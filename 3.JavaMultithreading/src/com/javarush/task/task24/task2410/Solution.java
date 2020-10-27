@@ -12,14 +12,14 @@ public class Solution {
     private int countItems;
 
     public Iterator getIterator(final String name) {
-        Iterator iterator =  new Iterator() {
+        return new Iterator() {
             {
                 countItems++;
                 System.out.println(name + " item " + countItems);
             }
 
             public Iterator next() {
-                return new Iterator();
+                return getIterator(name);
             }
         };
     }
