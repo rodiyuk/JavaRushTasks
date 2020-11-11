@@ -12,8 +12,7 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            new Thread(new Producer(queue)).start();
-            while (!queue.isEmpty()) {
+            while (true) {
                 System.out.println(queue.take());
                 Thread.sleep(200);
             }
