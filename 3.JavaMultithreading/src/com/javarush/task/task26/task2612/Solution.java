@@ -12,14 +12,14 @@ public class Solution {
 
     public void someMethod() {
         // Implement the logic here. Use the lock field
-        if (!lock.tryLock()) {
-            actionIfLockIsBusy();
-        } else {
+        if (lock.tryLock()) {
             try {
                 actionIfLockIsFree();
             } finally {
                 lock.unlock();
             }
+        } else {
+            actionIfLockIsBusy();
         }
     }
 
