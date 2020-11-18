@@ -4,14 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class ClientGuiView {
     private final ClientGuiController controller;
 
     private JFrame frame = new JFrame("Чат");
-    private JTextField textField = new JTextField(50);
-    private JTextArea messages = new JTextArea(10, 50);
+    private JTextField textField = new JTextField(40);
+    private JTextArea messages = new JTextArea(30, 60);
     private JTextArea users = new JTextArea(10, 10);
+    private JButton send = new JButton("Send");
+    private JButton reset = new JButton("Reset");
+    private JButton add = new JButton("Add file");
+    private JLabel label = new JLabel("Enter text");
+    private JMenuBar menuBar = new JMenuBar();
+    private JMenu m1 = new JMenu("File");
+    private JMenu m2 = new JMenu("Help");
+    private JMenuItem open= new JMenuItem("Open");
+    private JMenuItem close= new JMenuItem("Close");
 
     public ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
@@ -19,16 +29,32 @@ public class ClientGuiView {
     }
 
     private void initView() {
-        textField.setEditable(false);
+        textField.setEditable(true);
         messages.setEditable(false);
         users.setEditable(false);
 
-        frame.getContentPane().add(textField, BorderLayout.NORTH);
+        menuBar.add(m1);
+        menuBar.add(m2);
+        m1.add(open);
+        m1.add(close);
+
+        JPanel panel = new JPanel();
+        frame.getContentPane().add(menuBar, BorderLayout.NORTH);
         frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
         frame.getContentPane().add(new JScrollPane(users), BorderLayout.EAST);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setVisible(true);
+        panel.add(label);
+        panel.add(textField);
+//        panel.add(add);
+        panel.add(send);
+        panel.add(reset);
+        frame.getContentPane().add(BorderLayout.SOUTH, panel);
+        closeApp();
+        openFile();
+
+
 
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -36,7 +62,52 @@ public class ClientGuiView {
                 textField.setText("");
             }
         });
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textField.setText("");
+            }
+        });
+        send.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.sendTextMessage(textField.getText());
+                textField.setText("");
+            }
+        });
     }
+
+    public void openFile(){
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File file = null;
+                JFileChooser fileopen = new JFileChooser();
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION){
+                    file = fileopen.getSelectedFile();
+                    textField.setText(file.getName());
+                }
+
+            }
+        });
+    }
+    public void closeApp(){
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = { "Да", "Нет!" };
+                int n = JOptionPane.showOptionDialog(frame, "Закрыть окно?",
+                        "Подтверждение", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options,
+                        options[0]);
+                if (n == 0) {
+                    System.exit(0);
+                }
+            }
+        });
+    }
+
 
     public String getServerAddress() {
         return JOptionPane.showInputDialog(

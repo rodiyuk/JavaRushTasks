@@ -11,17 +11,20 @@ public class ClientGuiController extends Client{
 
     @Override
     protected String getServerAddress() {
-        return view.getServerAddress();
+//        return view.getServerAddress();
+        return "localhost";
     }
 
     @Override
     protected int getServerPort() {
-        return view.getServerPort();
+//        return view.getServerPort();
+        return 10;
     }
 
     @Override
     protected String getUserName() {
-        return view.getUserName();
+        return "admin";
+//        return view.getUserName();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class ClientGuiController extends Client{
 
         @Override
         protected void notifyConnectionStatusChanged(boolean clientConnected) {
-            view.notifyConnectionStatusChanged(clientConnected);
+            //view.notifyConnectionStatusChanged(clientConnected);
         }
     }
 }
