@@ -18,7 +18,7 @@ public class Server {
             while (true) {
                 // Ожидаем входящее соединение и запускаем отдельный поток при его принятии
                 Socket socket = serverSocket.accept();
-                new com.javarush.task.task30.task3008.Server.Handler(socket).start();
+                new Handler(socket).start();
             }
         } catch (Exception e) {
             ConsoleHelper.writeMessage("Произошла ошибка при запуске или работе сервера.");
@@ -119,6 +119,18 @@ public class Server {
                 connection.send(message);
             } catch (IOException e) {
                 ConsoleHelper.writeMessage("Не смогли отправить сообщение " + connection.getRemoteSocketAddress());
+            }
+        }
+    }
+
+    public static void sendPrivateMessage(Message message, String userName) {
+        for (String name : connectionMap.keySet()) {
+            if (name.equals(userName)) {
+                try {
+                    connectionMap.get(userName).send(message);
+                } catch (IOException e) {
+                    ConsoleHelper.writeMessage("Не смогли отправить сообщение " + connectionMap.get(userName).getRemoteSocketAddress());
+                }
             }
         }
     }

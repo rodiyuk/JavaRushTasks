@@ -77,6 +77,15 @@ public class Client {
         }
     }
 
+    protected void sendPivateTextMessage(String text) {
+        try {
+            connection.send(new Message(MessageType.TEXT, text));
+        } catch (IOException e) {
+            ConsoleHelper.writeMessage("Произошла ошибка во время отправки сообщения.");
+            clientConnected = false;
+        }
+    }
+
     public class SocketThread extends Thread {
         protected void processIncomingMessage(String message) {
             ConsoleHelper.writeMessage(message);

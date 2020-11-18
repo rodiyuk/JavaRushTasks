@@ -10,36 +10,81 @@ public class ClientGuiView {
     private final ClientGuiController controller;
 
     private JFrame frame = new JFrame("Чат");
-    private JTextField textField = new JTextField(40);
+    private JTextField textField = new JTextField(50);
     private JTextArea messages = new JTextArea(30, 60);
-    private JTextArea users = new JTextArea(10, 10);
+    private JTextArea users = new JTextArea(10,10);
     private JButton send = new JButton("Send");
     private JButton reset = new JButton("Reset");
     private JButton add = new JButton("Add file");
     private JLabel label = new JLabel("Enter text");
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu m1 = new JMenu("File");
-    private JMenu m2 = new JMenu("Help");
-    private JMenuItem open= new JMenuItem("Open");
-    private JMenuItem close= new JMenuItem("Close");
 
     public ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
         initView();
     }
 
+    private JMenu createFileMenu() {
+        // Создание выпадающего меню
+        JMenu file = new JMenu("Файл");
+        file.setMnemonic('Ф');
+        // Пункт меню "Открыть" с изображением
+        JMenuItem open = new JMenuItem("Открыть",
+                new ImageIcon("images/open.png"));
+        open.setMnemonic('О');
+        // Пункт меню из команды с выходом из программы
+        JMenuItem exit = new JMenuItem("Выход");
+        exit.setMnemonic('X');
+        // Добавление к пункту меню изображения
+        exit.setIcon(new ImageIcon("images/exit.png"));
+        // Добавим в меню пункта open
+        file.add(open);
+        // Добавление разделителя
+        file.addSeparator();
+        file.add(exit);
+
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File file = null;
+                JFileChooser fileopen = new JFileChooser();
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    file = fileopen.getSelectedFile();
+                    textField.setText(file.getName());
+                }
+
+            }
+        });
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = {"Да", "Нет!"};
+                int n = JOptionPane.showOptionDialog(frame, "Закрыть окно?",
+                        "Подтверждение", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options,
+                        options[0]);
+                if (n == 0) {
+                    System.exit(0);
+                }
+            }
+        });
+        return file;
+    }
+
     private void initView() {
         textField.setEditable(true);
         messages.setEditable(false);
+        messages.setLineWrap(true);
         users.setEditable(false);
 
-        menuBar.add(m1);
-        menuBar.add(m2);
-        m1.add(open);
-        m1.add(close);
+        // Добавление в главное меню выпадающих пунктов меню
+        frame.setJMenuBar(menuBar);
+        menuBar.add(createFileMenu());
+        menuBar.add(new JMenu("Help"));
 
         JPanel panel = new JPanel();
-        frame.getContentPane().add(menuBar, BorderLayout.NORTH);
+//        frame.getContentPane().add(menuBar, BorderLayout.NORTH);
         frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
         frame.getContentPane().add(new JScrollPane(users), BorderLayout.EAST);
         frame.pack();
@@ -47,13 +92,9 @@ public class ClientGuiView {
         frame.setVisible(true);
         panel.add(label);
         panel.add(textField);
-//        panel.add(add);
         panel.add(send);
         panel.add(reset);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        closeApp();
-        openFile();
-
 
 
         textField.addActionListener(new ActionListener() {
@@ -76,38 +117,6 @@ public class ClientGuiView {
             }
         });
     }
-
-    public void openFile(){
-        open.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                File file = null;
-                JFileChooser fileopen = new JFileChooser();
-                int ret = fileopen.showDialog(null, "Открыть файл");
-                if (ret == JFileChooser.APPROVE_OPTION){
-                    file = fileopen.getSelectedFile();
-                    textField.setText(file.getName());
-                }
-
-            }
-        });
-    }
-    public void closeApp(){
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object[] options = { "Да", "Нет!" };
-                int n = JOptionPane.showOptionDialog(frame, "Закрыть окно?",
-                        "Подтверждение", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, options,
-                        options[0]);
-                if (n == 0) {
-                    System.exit(0);
-                }
-            }
-        });
-    }
-
 
     public String getServerAddress() {
         return JOptionPane.showInputDialog(
@@ -170,8 +179,13 @@ public class ClientGuiView {
         ClientGuiModel model = controller.getModel();
         StringBuilder sb = new StringBuilder();
         for (String userName : model.getAllUserNames()) {
-            sb.append(userName).append("\n");
+            JButton name = new JButton(userName);
+            name.setSize(90,20);
+
+            name.setComponentPopupMenu(new JPopupMenu("Приватный чат"));
+            users.add(name);
+//            sb.append(userName).append("\n");
         }
-        users.setText(sb.toString());
+//        users.setText(sb.toString());
     }
 }
