@@ -12,19 +12,19 @@ public class ClientGuiView {
     private JFrame frame = new JFrame("Чат");
     private JTextField textField = new JTextField(50);
     private JTextArea messages = new JTextArea(30, 60);
-    private JTextArea users = new JTextArea(10,10);
+    private JTextArea users = new JTextArea(10, 10);
     private JButton send = new JButton("Send");
     private JButton reset = new JButton("Reset");
-    private JButton name = new JButton();
+    private JButton name;
     private JLabel label = new JLabel("Enter text");
     private JMenuBar menuBar = new JMenuBar();
     private final JTabbedPane tabbedPane = new JTabbedPane();
+    private static volatile boolean isPrivate = false;
 
     public ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
         initView();
     }
-
 
 
     private void initView() {
@@ -58,7 +58,11 @@ public class ClientGuiView {
 
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.sendTextMessage(textField.getText());
+                if (!isPrivate) {
+                    controller.sendTextMessage(textField.getText());
+                } else {
+                    controller.sendPivateTextMessage(textField.getText());
+                }
                 textField.setText("");
             }
         });
@@ -136,30 +140,32 @@ public class ClientGuiView {
 
     public void refreshUsers() {
         ClientGuiModel model = controller.getModel();
-        StringBuilder sb = new StringBuilder();
         for (String userName : model.getAllUserNames()) {
-            name.setName(userName);
-            name.setSize(90,20);
-            name.setFont(new Font("Verdana", Font.PLAIN, 12));
-            users.add(name);
-            name.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JTextArea privateChat = new JTextArea(10,60);
-                    tabbedPane.addTab(userName, privateChat);
-                    messages.setVisible(false);
-                    messages.setRows(0);
-                    textField.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            controller.sendTextMessage(textField.getText());
-                            textField.setText("");
-                        }
-                    });
-                }
-            });
-//            sb.append(userName).append("\n");
+            users.add(addUsers(userName));
         }
-//        users.setText(sb.toString());
+    }
+
+    private JButton addUsers(String userName) {
+        name = new JButton(userName);
+        name.setSize(90, 20);
+        name.setFont(new Font("Verdana", Font.PLAIN, 12));
+        name.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isPrivate = true;
+                JTextArea privateChat = new JTextArea(10, 60);
+                tabbedPane.addTab(userName, privateChat);
+                messages.setVisible(false);
+                messages.setRows(0);
+                textField.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        controller.sendTextMessage(textField.getText());
+                        textField.setText("");
+                    }
+                });
+            }
+        });
+        return name;
     }
 
     private JMenu createFileMenu() {

@@ -23,8 +23,8 @@ public class ClientGuiController extends Client{
 
     @Override
     protected String getUserName() {
-        return "admin";
-//        return view.getUserName();
+//        return "admin";
+        return view.getUserName();
     }
 
     @Override
