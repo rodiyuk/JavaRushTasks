@@ -6,6 +6,12 @@ public class Message implements Serializable {
     private final MessageType type;
     private final String data;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    private String userName;
+
     public Message(MessageType type) {
         this.type = type;
         data = null;
@@ -14,6 +20,12 @@ public class Message implements Serializable {
     public Message(MessageType type, String data) {
         this.type = type;
         this.data = data;
+    }
+
+    public Message(MessageType type, String data, String userName) {
+        this.type = type;
+        this.data = data;
+        this.userName = userName;
     }
 
     public MessageType getType() {

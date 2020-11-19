@@ -105,6 +105,10 @@ public class Server {
                 if (message.getType() == MessageType.TEXT) {
                     String data = message.getData();
                     sendBroadcastMessage(new Message(MessageType.TEXT, userName + ": " + data));
+                } else if (message.getType() == MessageType.PRIVATE_MESSAGE) {
+                    String data = message.getData();
+                    String nameUser = message.getUserName();
+                    sendPrivateMessage(new Message(MessageType.TEXT, data),nameUser);
                 } else {
                     ConsoleHelper.writeMessage("Получено сообщение от " + socket.getRemoteSocketAddress() + ". Тип сообщения не соответствует протоколу.");
                 }

@@ -6,6 +6,7 @@ public enum MessageType {
     NAME_ACCEPTED,              // имя принято.
     TEXT,                       // текстовое сообщение.
     USER_ADDED,                 //пользователь добавлен.
-    USER_REMOVED                // пользователь удален.
+    USER_REMOVED,                // пользователь удален.
+    PRIVATE_MESSAGE
 
 }
