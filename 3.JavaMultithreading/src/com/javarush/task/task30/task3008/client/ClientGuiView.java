@@ -30,11 +30,13 @@ public class ClientGuiView {
 
 
     private void initView() {
+        frame.setSize(200,70);
         if (!isPrivate) tabbedPane.setVisible(false);
         textField.setEditable(true);
         messages.setEditable(false);
         messages.setLineWrap(true);
 //        users.setEditable(false);
+        users.setMinimumSize(new Dimension(20,70));
 
         // Добавление в главное меню выпадающих пунктов меню
         frame.setJMenuBar(menuBar);
@@ -65,7 +67,7 @@ public class ClientGuiView {
                 if (!isPrivate) {
                     controller.sendTextMessage(textField.getText());
                 } else {
-                    controller.sendPivateTextMessage(textField.getText(), "admin");
+                    controller.sendPrivateTextMessage(textField.getText(), "admin");
                 }
                 textField.setText("");
             }
@@ -188,12 +190,14 @@ public class ClientGuiView {
                         tabbedPane.setVisible(true);
 
                         privateChat.setEditable(false);
-                        tabbedPane.addTab(userName, privateChat);
-                        messages.setVisible(false);
-                        messages.setRows(0);
+                        privateChat.setLineWrap(true);
+                        tabbedPane.addTab(userName, new JScrollPane(privateChat));
+//                        messages.setVisible(false);
+                        messages.setRows(5);
                         textField.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                controller.sendTextMessage(textField.getText());
+                                controller.sendPrivateTextMessage(textField.getText(), userName);
+                                privateChat.append(textField.getText() + "\n");
                                 textField.setText("");
                             }
                         });
@@ -231,7 +235,12 @@ public class ClientGuiView {
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
                     file = fileopen.getSelectedFile();
-                    textField.setText(file.getName());
+                    if (file.length()/(1024*1024) > 5)
+                        JOptionPane.showMessageDialog(frame,
+                                "Размер файла превышает 5мб",
+                                "Ошибка",
+                                JOptionPane.ERROR_MESSAGE);
+                    else textField.setText(file.getName());
                 }
 
             }

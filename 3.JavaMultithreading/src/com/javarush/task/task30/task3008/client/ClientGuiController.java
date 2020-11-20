@@ -15,7 +15,7 @@ public class ClientGuiController extends Client{
     @Override
     protected String getServerAddress() {
 //        return view.getServerAddress();
-        return "localhost";
+        return "192.168.100.148";
     }
 
     @Override

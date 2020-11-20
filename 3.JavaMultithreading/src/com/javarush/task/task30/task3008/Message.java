@@ -5,12 +5,11 @@ import java.io.Serializable;
 public class Message implements Serializable {
     private final MessageType type;
     private final String data;
+    private String userName;
 
     public String getUserName() {
         return userName;
     }
-
-    private String userName;
 
     public Message(MessageType type) {
         this.type = type;
