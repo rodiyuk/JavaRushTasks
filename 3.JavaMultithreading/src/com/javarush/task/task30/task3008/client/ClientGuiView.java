@@ -13,6 +13,7 @@ public class ClientGuiView {
     private JTextField textField = new JTextField(40);
     private JTextArea messages = new JTextArea(30, 60);
     private JPanel users = new JPanel(new VerticalLayout());
+//    private JTextArea users = new JTextArea();
     private JButton send = new JButton("Отправить");
     private JButton reset = new JButton("Сбросить");
     private JButton clear = new JButton("Очистить чат");
@@ -21,7 +22,8 @@ public class ClientGuiView {
     private JMenuBar menuBar = new JMenuBar();
     private final JTabbedPane tabbedPane = new JTabbedPane();
     private static volatile boolean isPrivate = false;
-    private JTextArea privateChat = new JTextArea(10, 60);
+//    private JTextArea privateChat = new JTextArea(10, 60);
+    public static volatile int index =-1;
 
     public ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
@@ -30,13 +32,12 @@ public class ClientGuiView {
 
 
     private void initView() {
-        frame.setSize(200,70);
         if (!isPrivate) tabbedPane.setVisible(false);
         textField.setEditable(true);
         messages.setEditable(false);
         messages.setLineWrap(true);
 //        users.setEditable(false);
-        users.setMinimumSize(new Dimension(20,70));
+//        users.setLayout(new VerticalLayout());
 
         // Добавление в главное меню выпадающих пунктов меню
         frame.setJMenuBar(menuBar);
@@ -47,7 +48,6 @@ public class ClientGuiView {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BorderLayout());
         frame.getContentPane().add(panel1, BorderLayout.NORTH);
-//        frame.getContentPane().add(menuBar, BorderLayout.NORTH);
         frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
         frame.getContentPane().add(new JScrollPane(users), BorderLayout.CENTER);
         frame.pack();
@@ -152,15 +152,16 @@ public class ClientGuiView {
 
     public void refreshUsers() {
         ClientGuiModel model = controller.getModel();
-
         for (String userName : model.getAllUserNames()) {
             model.addUser(addUsers(userName));
+            model.addUser(userName);
+            users.add(addUsers(userName));
 //            users.add(addUsers(userName));
         }
-
-        for (JButton button : model.getAllUsersButtons()){
-            users.add(button);
-        }
+//        users.add(addUsers(controller.name));
+//        for (JButton button : model.getAllUsersButtons()){
+//            users.add(button);
+//        }
     }
 
     private JButton addUsers(String userName) {
@@ -186,17 +187,19 @@ public class ClientGuiView {
                 privat.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        index++;
+                        JTextArea privateChat = new JTextArea(10, 55);
                         isPrivate = true;
                         tabbedPane.setVisible(true);
-
                         privateChat.setEditable(false);
-                        privateChat.setLineWrap(true);
+//                        privateChat.setLineWrap(true);
                         tabbedPane.addTab(userName, new JScrollPane(privateChat));
-//                        messages.setVisible(false);
+                        tabbedPane.setSelectedIndex(index);
                         messages.setRows(5);
                         textField.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 controller.sendPrivateTextMessage(textField.getText(), userName);
+                                int select = tabbedPane.getSelectedIndex();
                                 privateChat.append(textField.getText() + "\n");
                                 textField.setText("");
                             }
