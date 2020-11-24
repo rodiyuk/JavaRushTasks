@@ -12,8 +12,9 @@ public class ClientGuiView {
     private JFrame frame = new JFrame("Чат");
     private JTextField textField = new JTextField(40);
     private JTextArea messages = new JTextArea(30, 60);
+    //    private JPanel users;
     private JPanel users = new JPanel(new VerticalLayout());
-//    private JTextArea users = new JTextArea();
+    //    private JTextArea users = new JTextArea();
     private JButton send = new JButton("Отправить");
     private JButton reset = new JButton("Сбросить");
     private JButton clear = new JButton("Очистить чат");
@@ -22,8 +23,8 @@ public class ClientGuiView {
     private JMenuBar menuBar = new JMenuBar();
     private final JTabbedPane tabbedPane = new JTabbedPane();
     private static volatile boolean isPrivate = false;
-//    private JTextArea privateChat = new JTextArea(10, 60);
-    public static volatile int index =-1;
+    //    private JTextArea privateChat = new JTextArea(10, 60);
+    public static volatile int index = -1;
 
     public ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
@@ -32,6 +33,8 @@ public class ClientGuiView {
 
 
     private void initView() {
+        frame.setSize(850, 600);
+
         if (!isPrivate) tabbedPane.setVisible(false);
         textField.setEditable(true);
         messages.setEditable(false);
@@ -44,16 +47,10 @@ public class ClientGuiView {
         menuBar.add(createFileMenu());
         menuBar.add(new JMenu("Help"));
 
-        JPanel panel = new JPanel();
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new BorderLayout());
-        frame.getContentPane().add(panel1, BorderLayout.NORTH);
-        frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
-        frame.getContentPane().add(new JScrollPane(users), BorderLayout.CENTER);
-        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        panel1.add(tabbedPane, BorderLayout.WEST);
+
+        JPanel panel = new JPanel();
         panel.add(label);
         panel.add(textField);
         panel.add(send);
@@ -61,14 +58,21 @@ public class ClientGuiView {
         panel.add(clear);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
 
+        JPanel panel1 = new JPanel();
+        panel1.add(tabbedPane, BorderLayout.WEST);
+        panel1.setLayout(new BorderLayout());
+        frame.getContentPane().add(panel1, BorderLayout.NORTH);
+
+        frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
+
+        frame.getContentPane().add(new JScrollPane(users), BorderLayout.CENTER);
+//        frame.pack();
+//        frame.repaint();
+//        frame.revalidate();
 
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!isPrivate) {
-                    controller.sendTextMessage(textField.getText());
-                } else {
-                    controller.sendPrivateTextMessage(textField.getText(), "admin");
-                }
+                controller.sendTextMessage(textField.getText());
                 textField.setText("");
             }
         });
@@ -152,22 +156,21 @@ public class ClientGuiView {
 
     public void refreshUsers() {
         ClientGuiModel model = controller.getModel();
+        users.removeAll();
+
         for (String userName : model.getAllUserNames()) {
-            model.addUser(addUsers(userName));
             model.addUser(userName);
             users.add(addUsers(userName));
-//            users.add(addUsers(userName));
         }
-//        users.add(addUsers(controller.name));
-//        for (JButton button : model.getAllUsersButtons()){
-//            users.add(button);
-//        }
+        frame.pack();
     }
 
     private JButton addUsers(String userName) {
         name = new JButton(userName);
-        name.setSize(90, 20);
-        name.setFont(new Font("Verdana", Font.PLAIN, 12));
+        name.setFont(new Font("Verdana", Font.ITALIC, 15));
+        if (userName.equalsIgnoreCase(controller.name))
+            name.setBackground(Color.pink);
+        name.setCursor(new Cursor(Cursor.HAND_CURSOR));
         name.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,13 +195,12 @@ public class ClientGuiView {
                         isPrivate = true;
                         tabbedPane.setVisible(true);
                         privateChat.setEditable(false);
-//                        privateChat.setLineWrap(true);
                         tabbedPane.addTab(userName, new JScrollPane(privateChat));
                         tabbedPane.setSelectedIndex(index);
                         messages.setRows(5);
                         textField.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                controller.sendPrivateTextMessage(textField.getText(), userName);
+                                controller.sendPrivateTextMessage(textField.getText(), userName, controller.name);
                                 int select = tabbedPane.getSelectedIndex();
                                 privateChat.append(textField.getText() + "\n");
                                 textField.setText("");
@@ -238,7 +240,7 @@ public class ClientGuiView {
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
                     file = fileopen.getSelectedFile();
-                    if (file.length()/(1024*1024) > 5)
+                    if (file.length() / (1024 * 1024) > 5)
                         JOptionPane.showMessageDialog(frame,
                                 "Размер файла превышает 5мб",
                                 "Ошибка",

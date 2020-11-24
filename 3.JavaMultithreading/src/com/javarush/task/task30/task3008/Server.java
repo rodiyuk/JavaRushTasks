@@ -3,6 +3,8 @@ package com.javarush.task.task30.task3008;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,10 +12,10 @@ public class Server {
     private static Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        ConsoleHelper.writeMessage("Введите порт сервера:");
-        int port = ConsoleHelper.readInt();
+//        ConsoleHelper.writeMessage("Введите порт сервера:");
+//        int port = ConsoleHelper.readInt();
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+        try (ServerSocket serverSocket = new ServerSocket(10)) {
             ConsoleHelper.writeMessage("Чат сервер запущен.");
             while (true) {
                 // Ожидаем входящее соединение и запускаем отдельный поток при его принятии
@@ -104,12 +106,16 @@ public class Server {
 
                 if (message.getType() == MessageType.TEXT) {
                     String data = message.getData();
-                    sendBroadcastMessage(new Message(MessageType.TEXT, userName + ": " + data));
+                    SimpleDateFormat format = new SimpleDateFormat("H:mm:s");
+                    sendBroadcastMessage(new Message(MessageType.TEXT, format.format(new Date())
+                            + " " + userName + ": " + data));
                 } else if (message.getType() == MessageType.PRIVATE_MESSAGE) {
-
-                    String nameUser = message.getUserName();
-                    String data = "Личное сообщение от " + nameUser + ": " + message.getData();
-                    sendPrivateMessage(new Message(MessageType.TEXT, data),nameUser);
+                    String nameUserTo = message.getUserName();
+                    String nameUserFrom = message.getUserNameSource();
+                    String data = "Личное сообщение от " + nameUserFrom + ": " + message.getData();
+                    sendPrivateMessage(new Message(MessageType.TEXT, data), nameUserTo);
+                } else if (message.getType() == MessageType.USER_ADDED) {
+                    sendBroadcastMessage(new Message(MessageType.TEXT, "Присоединился новый пользователь "));
                 } else {
                     ConsoleHelper.writeMessage("Получено сообщение от " + socket.getRemoteSocketAddress() + ". Тип сообщения не соответствует протоколу.");
                 }

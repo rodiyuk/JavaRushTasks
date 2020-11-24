@@ -1,7 +1,5 @@
 package com.javarush.task.task30.task3008.client;
 
-import javax.swing.*;
-
 public class ClientGuiController extends Client{
     private ClientGuiModel model = new ClientGuiModel();
     private ClientGuiView view = new ClientGuiView(this);
@@ -54,10 +52,6 @@ public class ClientGuiController extends Client{
         @Override
         protected void informAboutAddingNewUser(String userName) {
             model.addUser(userName);
-            view.refreshUsers();
-        }
-        protected void informAboutAddingNewUser(JButton jButton) {
-            model.addUser(jButton);
             view.refreshUsers();
         }
 

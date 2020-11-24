@@ -6,6 +6,7 @@ public class Message implements Serializable {
     private final MessageType type;
     private final String data;
     private String userName;
+    private String userNameSource;
 
     public String getUserName() {
         return userName;
@@ -21,10 +22,11 @@ public class Message implements Serializable {
         this.data = data;
     }
 
-    public Message(MessageType type, String data, String userName) {
+    public Message(MessageType type, String data, String userNameDest, String userNameSource) {
         this.type = type;
         this.data = data;
-        this.userName = userName;
+        this.userName = userNameDest;
+        this.userNameSource = userNameSource;
     }
 
     public MessageType getType() {
@@ -33,5 +35,9 @@ public class Message implements Serializable {
 
     public String getData() {
         return data;
+    }
+
+    public String getUserNameSource() {
+        return userNameSource;
     }
 }

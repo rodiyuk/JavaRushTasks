@@ -77,9 +77,9 @@ public class Client {
         }
     }
 
-    protected void sendPrivateTextMessage(String text, String userName) {
+    protected void sendPrivateTextMessage(String text, String userNameDest, String userNameSource) {
         try {
-            connection.send(new Message(MessageType.PRIVATE_MESSAGE, text, userName));
+            connection.send(new Message(MessageType.PRIVATE_MESSAGE, text, userNameDest, userNameSource));
         } catch (IOException e) {
             ConsoleHelper.writeMessage("Произошла ошибка во время отправки сообщения.");
             clientConnected = false;
