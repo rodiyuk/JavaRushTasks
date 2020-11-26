@@ -7,6 +7,7 @@ public enum MessageType {
     TEXT,                       // текстовое сообщение.
     USER_ADDED,                 //пользователь добавлен.
     USER_REMOVED,                // пользователь удален.
-    PRIVATE_MESSAGE
+    PRIVATE_MESSAGE,
+    FILE
 
 }

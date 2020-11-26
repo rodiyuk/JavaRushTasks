@@ -77,6 +77,15 @@ public class Client {
         }
     }
 
+    protected void sendFile(String text, String userNameDest, String userNameSource) {
+        try {
+            connection.send(new Message(MessageType.FILE, text, userNameDest, userNameSource));
+        } catch (IOException e) {
+            ConsoleHelper.writeMessage("Произошла ошибка во время отправки сообщения.");
+            clientConnected = false;
+        }
+    }
+
     protected void sendPrivateTextMessage(String text, String userNameDest, String userNameSource) {
         try {
             connection.send(new Message(MessageType.PRIVATE_MESSAGE, text, userNameDest, userNameSource));

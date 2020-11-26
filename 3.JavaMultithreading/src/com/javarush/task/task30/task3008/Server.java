@@ -1,5 +1,7 @@
 package com.javarush.task.task30.task3008;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -109,11 +111,23 @@ public class Server {
                     SimpleDateFormat format = new SimpleDateFormat("H:mm:s");
                     sendBroadcastMessage(new Message(MessageType.TEXT, format.format(new Date())
                             + " " + userName + ": " + data));
+
                 } else if (message.getType() == MessageType.PRIVATE_MESSAGE) {
                     String nameUserTo = message.getUserName();
                     String nameUserFrom = message.getUserNameSource();
                     String data = "Личное сообщение от " + nameUserFrom + ": " + message.getData();
                     sendPrivateMessage(new Message(MessageType.TEXT, data), nameUserTo);
+
+                }else if (message.getType() == MessageType.FILE) {
+                    String nameUserTo = message.getUserName();
+                    String nameUserFrom = message.getUserNameSource();
+                    String data = message.getData();
+                    connection.getRemoteSocketAddress().toString();
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("D:\receiveFile.txt"));
+                    writer.write(data);
+                    sendFile(new Message(MessageType.FILE, data), nameUserTo);
+                    sendBroadcastMessage(new Message(MessageType.TEXT, connection.getRemoteSocketAddress().toString()));
+
                 } else if (message.getType() == MessageType.USER_ADDED) {
                     sendBroadcastMessage(new Message(MessageType.TEXT, "Присоединился новый пользователь "));
                 } else {
@@ -135,6 +149,18 @@ public class Server {
     }
 
     public static void sendPrivateMessage(Message message, String userName) {
+        for (String name : connectionMap.keySet()) {
+            if (name.equals(userName)) {
+                try {
+                    connectionMap.get(userName).send(message);
+                } catch (IOException e) {
+                    ConsoleHelper.writeMessage("Не смогли отправить сообщение " + connectionMap.get(userName).getRemoteSocketAddress());
+                }
+            }
+        }
+    }
+
+    public static void sendFile(Message message, String userName) {
         for (String name : connectionMap.keySet()) {
             if (name.equals(userName)) {
                 try {

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 
 public class ClientGuiView {
     private final ClientGuiController controller;
@@ -215,12 +215,27 @@ public class ClientGuiView {
                                         "Ошибка",
                                         JOptionPane.ERROR_MESSAGE);
                             else textField.setText(file.getName());
+                            controller.sendFile(fileText(file),userName, controller.name);
+
                         }
                     }
                 });
             }
         });
         return name;
+    }
+    private String fileText(File file){
+        StringBuilder sb = new StringBuilder();
+        try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+            while (reader.ready()){
+                sb.append(reader.readLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     private JMenu createFileMenu() {
