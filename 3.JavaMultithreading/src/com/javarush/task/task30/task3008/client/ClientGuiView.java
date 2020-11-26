@@ -12,9 +12,7 @@ public class ClientGuiView {
     private JFrame frame = new JFrame("Чат");
     private JTextField textField = new JTextField(40);
     private JTextArea messages = new JTextArea(30, 60);
-    //    private JPanel users;
     private JPanel users = new JPanel(new VerticalLayout());
-    //    private JTextArea users = new JTextArea();
     private JButton send = new JButton("Отправить");
     private JButton reset = new JButton("Сбросить");
     private JButton clear = new JButton("Очистить чат");
@@ -23,7 +21,6 @@ public class ClientGuiView {
     private JMenuBar menuBar = new JMenuBar();
     private final JTabbedPane tabbedPane = new JTabbedPane();
     private static volatile boolean isPrivate = false;
-    //    private JTextArea privateChat = new JTextArea(10, 60);
     public static volatile int index = -1;
 
     public ClientGuiView(ClientGuiController controller) {
@@ -39,8 +36,6 @@ public class ClientGuiView {
         textField.setEditable(true);
         messages.setEditable(false);
         messages.setLineWrap(true);
-//        users.setEditable(false);
-//        users.setLayout(new VerticalLayout());
 
         // Добавление в главное меню выпадающих пунктов меню
         frame.setJMenuBar(menuBar);
@@ -66,9 +61,6 @@ public class ClientGuiView {
         frame.getContentPane().add(new JScrollPane(messages), BorderLayout.WEST);
 
         frame.getContentPane().add(new JScrollPane(users), BorderLayout.CENTER);
-//        frame.pack();
-//        frame.repaint();
-//        frame.revalidate();
 
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -178,13 +170,13 @@ public class ClientGuiView {
                 int y = name.getY() + name.getHeight();
                 JPopupMenu jPopupMenu = new JPopupMenu();
                 JMenuItem privat = new JMenuItem("Личное сообщение");
-                JMenuItem block = new JMenuItem("Заблокировать пользователя");
+                JMenuItem send = new JMenuItem("Отправить файл");
                 jPopupMenu.add(privat);
-                jPopupMenu.add(block);
+                jPopupMenu.add(send);
                 jPopupMenu.show(users, x, y);
                 if (userName.equals(controller.name)) {
                     privat.setEnabled(false);
-                    block.setEnabled(false);
+                    send.setEnabled(false);
                 }
 
                 privat.addActionListener(new ActionListener() {
@@ -206,6 +198,24 @@ public class ClientGuiView {
                                 textField.setText("");
                             }
                         });
+                    }
+                });
+
+                send.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        File file = null;
+                        JFileChooser fileopen = new JFileChooser();
+                        int ret = fileopen.showDialog(null, "Открыть файл");
+                        if (ret == JFileChooser.APPROVE_OPTION) {
+                            file = fileopen.getSelectedFile();
+                            if (file.length() / (1024 * 1024) > 5)
+                                JOptionPane.showMessageDialog(frame,
+                                        "Размер файла превышает 5мб",
+                                        "Ошибка",
+                                        JOptionPane.ERROR_MESSAGE);
+                            else textField.setText(file.getName());
+                        }
                     }
                 });
             }
