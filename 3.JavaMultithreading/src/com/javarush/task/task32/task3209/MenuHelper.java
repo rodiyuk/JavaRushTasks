@@ -5,10 +5,13 @@ import com.javarush.task.task32.task3209.listeners.TextEditMenuListener;
 import com.javarush.task.task32.task3209.listeners.UndoMenuListener;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuHelper {
@@ -35,7 +38,8 @@ public class MenuHelper {
         JMenu helpMenu = new JMenu("Помощь");
         menuBar.add(helpMenu);
 
-        addMenuItem(helpMenu, "О программе", view);
+        JMenuItem menuItem = addMenuItem(helpMenu, "О программе", view);
+
     }
 
     public static void initFontMenu(View view, JMenuBar menuBar) {
