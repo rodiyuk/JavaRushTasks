@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ConsoleHelper {
@@ -23,18 +22,25 @@ public class ConsoleHelper {
 
     public static List<Dish> getAllDishesForOrder() throws IOException {
         List<Dish> dishes = new ArrayList<>();
-        writeMessage(Arrays.asList(Dish.values()).toString());
         writeMessage("Список блюд:");
         writeMessage(Dish.allDishesToString());
-        writeMessage("Введине выбранное блюдо:");
+        writeMessage("Выберите блюдо:");
         while (true) {
             String dish = readString();
             if (dish.equals("exit")) break;
-            Dish choose = Dish.valueOf(dish);
-            if (!Arrays.asList(Dish.values()).contains(Dish.valueOf(dish)))
+            if (!contains(dish))
                 writeMessage("Данного блюда нет в продаже");
-            else dishes.add(Dish.valueOf(dish));
+            else dishes.add(Dish.valueOf(dish.toUpperCase()));
         }
         return dishes;
+    }
+
+    public static boolean contains(String test) {
+        for (Dish d : Dish.values()) {
+            if (d.name().toLowerCase().equalsIgnoreCase(test)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
