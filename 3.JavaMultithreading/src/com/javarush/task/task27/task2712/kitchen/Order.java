@@ -8,6 +8,11 @@ import java.util.List;
 
 public class Order {
     private final Tablet tablet;
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
     protected List<Dish> dishes;
 
     public Order(Tablet tablet) throws IOException {
@@ -30,5 +35,9 @@ public class Order {
     public String toString() {
         if (dishes.isEmpty()) return "";
         else return "Your order: " + dishes.toString() + " of " + tablet.toString();
+    }
+
+    public Tablet getTablet() {
+        return tablet;
     }
 }

@@ -14,11 +14,9 @@ public class Restaurant {
         tablet.addObserver(cook);
         
         tablet.createOrder();
-/*
         tablet.createOrder();
         tablet.createOrder();
         tablet.createOrder();
         tablet.createOrder();
-*/
     }
 }
